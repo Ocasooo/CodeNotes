@@ -1,0 +1,23 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Default capability",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "fs:allow-mkdir",
+    "fs:allow-read-dir",
+    "fs:allow-write-text-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        {
+          "path": "$DOCUMENT/Code-Notes"
+        },
+        {
+          "path": "$DOCUMENT/Code-Notes/**"
+        }
+      ]
+    }
+  ]
+}
