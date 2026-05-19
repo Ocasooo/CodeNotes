@@ -17,6 +17,7 @@
     "monaco-editor": "^0.55.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.6.0",
     "zustand": "^5.0.13"
   },
   "devDependencies": {

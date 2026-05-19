@@ -1,8 +1,11 @@
 import { writeTextFile, mkdir, BaseDirectory } from "@tauri-apps/plugin-fs";
 import { join } from "@tauri-apps/api/path";
 import { useState } from "react";
+import { useSnippetStore } from "../store/snippetStore";
+
 function SnippetForm() {
   const [snippetName, setSnippetName] = useState("");
+  const addSnippetName = useSnippetStore(state=>state.addSnippetName)
 
   return (
     <form
@@ -19,6 +22,10 @@ function SnippetForm() {
         await writeTextFile(`Code-Notes/${snippetName}.json`, `{}`, {
           baseDir: BaseDirectory.Document,
         });
+        setSnippetName('')
+        console.log("1")
+        addSnippetName(`${snippetName}.json`)
+        console.log("2")
       }}
     >
       <input
