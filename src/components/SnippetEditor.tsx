@@ -12,7 +12,7 @@ function SnippetEditor() {
   useEffect(() => {
     if (!selectedSnippet) return;
     async function loadFile() {
-      const content = await readTextFile(`Code-Notes/${selectedSnippet}.json`, {
+      const content = await readTextFile(`Code-Notes/${selectedSnippet.name}.json`, {
         baseDir: BaseDirectory.Document,
       });
       setText(content);
@@ -40,7 +40,7 @@ function SnippetEditor() {
           defaultLanguage="javascript"
           options={{ fontSize: 20 }}
           onChange={(value) => setText(value)}
-          value={selectedSnippet.code ?? ""}
+          value={text}
         />
       ) : (
         <h1>No snippet</h1>

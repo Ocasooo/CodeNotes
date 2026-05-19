@@ -1,5 +1,4 @@
 import { writeTextFile, mkdir, BaseDirectory } from "@tauri-apps/plugin-fs";
-import { join } from "@tauri-apps/api/path";
 import { useState } from "react";
 import { useSnippetStore } from "../store/snippetStore";
 
@@ -19,7 +18,7 @@ function SnippetForm() {
 
         //if(snippet)
 
-        await writeTextFile(`Code-Notes/${snippetName}.json`, `{}`, {
+        await writeTextFile(`Code-Notes/${snippetName}.json`, ``, {
           baseDir: BaseDirectory.Document,
         });
         setSnippetName('')
@@ -30,6 +29,7 @@ function SnippetForm() {
         className="bg-zinc-900 w-full border-none outline-none p-4"
         type="text"
         placeholder="Write a snippet"
+        value={snippetName}
         onChange={(e) => {
           setSnippetName(e.target.value);
         }}
