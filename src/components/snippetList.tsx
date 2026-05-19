@@ -13,14 +13,21 @@ function snippetList() {
       const files = await readDir("Code-Notes", {
         baseDir: BaseDirectory.Document,
       });
-      const fileNames = files.map((file) => file.name!);
+      const fileNames = files
+        .map((file) => file.name)
+        .filter((name): name is string => name !== null)
+        .map((name) => name.replace(".json", ""));
       setSnippetsNames(fileNames);
     }
     loadFiles();
   }, []);
 
   return (
-    <div>{snippetNames.map((snippetName) => SnippetItem({ snippetName }))}</div>
+    <div>
+      {snippetNames.map((snippetName) => (
+        <SnippetItem key={snippetName} snippetName={snippetName} />
+      ))}
+    </div>
   );
 }
 

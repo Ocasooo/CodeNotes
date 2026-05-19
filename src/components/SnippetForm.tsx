@@ -23,9 +23,7 @@ function SnippetForm() {
           baseDir: BaseDirectory.Document,
         });
         setSnippetName('')
-        console.log("1")
-        addSnippetName(`${snippetName}.json`)
-        console.log("2")
+        addSnippetName(snippetName)
       }}
     >
       <input

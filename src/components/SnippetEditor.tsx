@@ -1,7 +1,7 @@
 import Editor from "@monaco-editor/react";
 import { useSnippetStore } from "../store/snippetStore";
 import { useEffect, useState } from "react";
-import { writeTextFile } from "@tauri-apps/plugin-fs";
+import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { BaseDirectory } from "@tauri-apps/api/path";
 
 function SnippetEditor() {
@@ -10,11 +10,22 @@ function SnippetEditor() {
   const selectedSnippet = useSnippetStore((state) => state.selectedSnippet);
 
   useEffect(() => {
-    const saveText = setTimeout(async () => {
-      await writeTextFile(`Code-Notes/${selectedSnippet}.json`, text ?? "", {
+    if (!selectedSnippet) return;
+    async function loadFile() {
+      const content = await readTextFile(`Code-Notes/${selectedSnippet}.json`, {
         baseDir: BaseDirectory.Document,
       });
-      console.log("saving");
+      setText(content);
+    }
+    loadFile();
+  }, [selectedSnippet]);
+
+  useEffect(() => {
+    const saveText = setTimeout(async () => {
+      if (!selectedSnippet) return;
+      await writeTextFile(`Code-Notes/${selectedSnippet.name}.json`, text ?? "", {
+        baseDir: BaseDirectory.Document,
+      });
     }, 1000);
     return () => {
       clearTimeout(saveText);
@@ -29,6 +40,7 @@ function SnippetEditor() {
           defaultLanguage="javascript"
           options={{ fontSize: 20 }}
           onChange={(value) => setText(value)}
+          value={selectedSnippet.code ?? ""}
         />
       ) : (
         <h1>No snippet</h1>
